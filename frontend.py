@@ -113,5 +113,6 @@ elif page=="Applications":
         #         predictions[0], columns=["Network", "Classification", "Confidence"]
         #     )
         # )
+ 
 
-
+st.caption("Made with 💟 by CogXRLabs.")
