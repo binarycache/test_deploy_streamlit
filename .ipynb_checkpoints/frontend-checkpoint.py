@@ -101,7 +101,7 @@ elif page=="Applications":
         img = Image.open(image).convert('RGB') # 3 channels
         st.write("")
         with st.spinner(text="Classifying now..."):
-            prediction = classify(img, 'vgg.h5')
+            prediction = classify(img, 'mobile_netv2.h5')
         _, label,_ = st.columns([2,3,1])
         if prediction == 0:
             label.header("X-ray image has Covid")
