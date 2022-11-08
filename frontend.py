@@ -18,7 +18,7 @@ from PIL import Image
 from io import BytesIO
 import pandas as pd
 import urllib
-from classify import *
+from classify import classify_covid, classify_tb, classify_xray
 plt.style.use("ggplot")
 
 # set page layout
@@ -60,11 +60,7 @@ elif page=="Register":
     first_name.text_input("First Name")
     last_name.text_input("Last Name")
     
-<<<<<<< HEAD
-    age, gender = st.columns([3,1])
-=======
     age, gender, = st.columns([3,1])
->>>>>>> 703f9b07132fcc7bea2394199cf0a99188d7f391
     age.number_input("Age (in Years)",min_value = 1,max_value=100,value = 30,step = 1)
     gender.selectbox("Gender",["Male","Female","Others"],index = 0)
 
@@ -95,47 +91,58 @@ elif page=="Register":
         else:
             st.warning("Please Check the T&C box")
 
-elif page=="Applications":
-    choice = st.selectbox("Choose one of the following Applications",["Covid Classifier", "Breast Cancer Classifier"], index=0)
-    image = st.file_uploader(f"Please Choose an X-Ray Image for {choice.split(' ')[0]} classification", ['jpg', 'jpeg','png'])
+elif page=="Covid Classifier":
+    image = st.file_uploader(f"Please Choose an X-Ray Image for Covid classification", ['jpg', 'jpeg','png'])
 
     if image:
-<<<<<<< HEAD
-        _, input_image,_ = st.columns([2,3,1])
-        input_image.image(image, width=300)
-        img = Image.open(image).convert('RGB') # 3 channels
-        st.write("")
-        with st.spinner(text="Classifying now..."):
-            prediction = classify(img, 'mobile_netv2.h5')
-        _, label,_ = st.columns([2,3,1])
-        if prediction == 0:
-            label.header("X-ray image has Covid")
-        elif prediction==1:
-            label.header("X-Ray scan is healthy")
-        else:
-            label.header("X-Ray has pneumonia")
-=======
         st.image(image)
         img = Image.open(image).convert('RGB') # 3 channels
         st.write("")
         st.write("Classifying now...")
-        label = classify(img, 'vgg.h5')
+        label = classify_covid(img, 'Covid-DenseNet121.tflite')
         if label == 0:
             st.header("X-ray image has Covid")
         elif label==1:
             st.header("X-Ray scan is healthy")
         else:
             st.header("X-Ray has pneumonia")
->>>>>>> 703f9b07132fcc7bea2394199cf0a99188d7f391
         # st.subheader(f"Top Predictions from {network}")
         # st.dataframe(
         #     pd.DataFrame(
         #         predictions[0], columns=["Network", "Classification", "Confidence"]
         #     )
         # )
-<<<<<<< HEAD
-=======
+
+
+    
+
+elif page=="X-Ray Check":
+
+    image = st.file_uploader(f"Please choose an X-Ray image for health classification",['jpg','jpeg','png'])  
+    if image:
+        st.image(image)
+        img = Image.open(image).convert('RGB')
+        st.write('')
+        st.write('Classifying now...')
+        label = classify_xray(img, 'X-Ray_DenseNet.tflite')
+        if label >1:
+            st.header('X-Ray is Abnormal')
+        else:
+            st.header('X-Ray is Normal')
+
+elif page =="TB Classifier":
+    image = st.file_uploader(f"Please choose an X-Ray image for health classification",['jpg','jpeg','png'])  
+    if image:
+        st.image(image)
+        img = Image.open(image).convert('RGB')
+        st.write('')
+        st.write('Classifying now...')
+        label = classify_tb(img, 'TB_DenseNet121.tflite')
+        if label == 0:
+            st.header('Normal')
+        else:
+            st.header('Tuberculosis')
+
  
 
->>>>>>> 703f9b07132fcc7bea2394199cf0a99188d7f391
 st.caption("Made with 💟 by CogXRLabs.")

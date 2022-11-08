@@ -1,19 +1,10 @@
 import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
-<<<<<<< HEAD
-from tensorflow.keras.layers.experimental import preprocessing
-    
-    
-def classify(img, model):
-    model = tf.keras.models.load_model(model)
-    
-=======
 
-def classify(img, model):
+def classify_covid(img, model):
     # Load the model
     model = tf.keras.models.load_model(model)
->>>>>>> 703f9b07132fcc7bea2394199cf0a99188d7f391
     # Create the array of the right shape to feed into the keras model
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     image = img
@@ -34,6 +25,47 @@ def classify(img, model):
     return np.argmax(prediction) # return position of the highest probability
 
 
+def classify_xray(img, model):
+    #load model
+    model = tf.keras.models.load_model(model)
+    #create the array of the right shape to feed into the model
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    image = img
+    size = (224,224)
+    image = ImageOps.fit(image, size, Image.ANTIALIAS)
+
+    #convert image to numpy array
+    img_arr = np.asarray(image)
+    normalized_img_arr = (img_arr.astype(np.float32)/127.0)-1
+
+    data[0] = normalized_image_array
+
+    preds = model.predict(data)
+    count = 0
+    for i in range(0,6,1):
+        if preds[0][i]>0.5:
+            count+=1
+        else:
+            count+=0
+    return count
+
+def classify_tb(img, model):
+
+    model = tf.keras.models.load_model(model)
+    #create the array of the right shape to feed into the model
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    image = img
+    size = (224,224)
+    image = ImageOps.fit(image, size, Image.ANTIALIAS)
+
+    #convert image to numpy array
+    img_arr = np.asarray(image)
+    normalized_img_arr = (img_arr.astype(np.float32)/127.0)-1
+
+    data[0] = normalized_image_array
+
+    preds = model.predict(data)
+    return np.argmax(preds)
 # # initialize the input image shape (224x224 pixels) along with
 # # the pre-processing function (this might need to be changed
 # # based on which model we use to classify our image)

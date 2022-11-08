@@ -1,3 +1,0 @@
-'COVID19', 
-'Normal' 
-'Viral Pneumonia'
