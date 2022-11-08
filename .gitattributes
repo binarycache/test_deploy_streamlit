@@ -1,0 +1,6 @@
+mobile_netv2.h5 filter=lfs diff=lfs merge=lfs -text
+vgg.h5 filter=lfs diff=lfs merge=lfs -text
+Models/*/.h5 filter=lfs diff=lfs merge=lfs -text
+Models/Covid/Covid-Large-DenseNet121_BASE_MODEL.h5 filter=lfs diff=lfs merge=lfs -text
+Models/TB/TB_DenseNet121_BASE_MODEL.h5 filter=lfs diff=lfs merge=lfs -text
+Models/X-Ray/X-Ray_DenseNet.h5 filter=lfs diff=lfs merge=lfs -text

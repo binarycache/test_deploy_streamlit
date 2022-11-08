@@ -1,12 +1,19 @@
 import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
+<<<<<<< HEAD
 from tensorflow.keras.layers.experimental import preprocessing
     
     
 def classify(img, model):
     model = tf.keras.models.load_model(model)
     
+=======
+
+def classify(img, model):
+    # Load the model
+    model = tf.keras.models.load_model(model)
+>>>>>>> 703f9b07132fcc7bea2394199cf0a99188d7f391
     # Create the array of the right shape to feed into the keras model
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     image = img
